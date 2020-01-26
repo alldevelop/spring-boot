@@ -59,4 +59,26 @@ public class UserController {
             return new ResponseEntity(userService.getAll(), HttpStatus.OK);
         }
     }
+    @DeleteMapping
+    public ResponseEntity delete(@RequestBody User user) {
+        try {
+            userService.delete(user);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Bad user params");
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteById(@PathVariable Integer id) {
+        try {
+            userService.delete(id);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(String.format("Wrong id %d", id));
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
